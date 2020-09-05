@@ -39,17 +39,41 @@ class Vampire {
 
   // Returns the vampire object with that name, or null if no vampire exists with that name
   vampireWithName(name) {
+    //for (const offspring of this.offspring) {
+      if (this === name) {
+        return this;
+      }
+    //}
     
+    for (const offspring of this.offspring) {
+      offspring.vampireWithName(name);
+    }
+
+    return null
   }
 
   // Returns the total number of vampires that exist
   get totalDescendents() {
-    
+    let totalVampires = 0;
+    if (this) {
+      totalVampires += this.numberOfOffspring;
+    }
+    for (const offspring of this.offspring) {
+      totalVampires += offspring.totalDescendents;
+    }
+    return totalVampires;
   }
 
   // Returns an array of all the vampires that were converted after 1980
   get allMillennialVampires() {
-    
+    let millenialVamps = []; // 1
+    if (this.yearConverted > 1980) {
+      millenialVamps.push(this); // 2
+    }
+    for (const offspring of this.offspring) {
+      offspring.allMillennialVampires;
+    }
+    return millenialVamps;
   }
 
   /** Stretch **/
@@ -72,27 +96,30 @@ class Vampire {
   }
 }
 
-// const original = new Vampire("Original", 1900);
+const original = new Vampire("Original", 1981);
 
-// //Original
-// const ansel = new Vampire("Ansel", 1920);
-// const bart = new Vampire("Bart", 1925);
-// original.addOffspring(ansel);
-// original.addOffspring(bart);
+//Original
+const ansel = new Vampire("Ansel", 2000);
+const bart = new Vampire("Bart", 2005);
+original.addOffspring(ansel);
+original.addOffspring(bart);
 
-// //Ansel
-// const sarah = new Vampire("Sarah", 1940);
-// const elgort = new Vampire("Elgort", 1945);
-// ansel.addOffspring(sarah);
-// ansel.addOffspring(elgort);
+//Ansel
+const sarah = new Vampire("Sarah", 1940);
+const elgort = new Vampire("Elgort", 1945);
+ansel.addOffspring(sarah);
+ansel.addOffspring(elgort);
 
-// //Elgort
-// const andrew = new Vampire("Andrew", 1965);
-// elgort.addOffspring(andrew);
+//Elgort
+const andrew = new Vampire("Andrew", 1965);
+elgort.addOffspring(andrew);
 
 // console.log(andrew.closestCommonAncestor(sarah));
 // console.log(original.isMoreSeniorThan(ansel));
 // console.log(ansel)
+//console.log(ansel.vampireWithName(sarah))
+//console.log(original.totalDescendents)
+//console.log(original.allMillennialVampires)
 
 module.exports = Vampire;
 
